@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<title>Testing stuff</title>
+
+		<style type="text/css">
+			@import "../dijit/themes/claro/claro.css";
+
+			html, body {
+				box-sizing: border-box;
+				height: 100%;
+				margin: 0;
+				overflow: hidden;
+				padding: 0;
+				width: 100%;
+			}
+		</style>
+	</head>
+	<body class="claro">
+
+		<span data-dojo-type="dojox.data.FileStore"
+			data-dojo-id="myStore" data-dojo-props="url:'./data.json'"></span>
+
+		<table data-dojo-type="dojox.grid.DataGrid"
+			data-dojo-props="store:myStore"
+			style="height: 400px; width: 600px;">
+			<thead>
+				<tr>
+					<th field="id" width="200px">ID</th>
+					<th field="firstField" width="200px">Field 1</th>
+					<th field="secondField" width="200px">Field 2</th>
+				</tr>
+			</thead>
+		</table>
+
+		<script data-dojo-config="async:true" src="../dojo/dojo.js"></script>
+		<script type="text/javascript">
+			require({
+				async: true,
+				isDebug: true,
+				paths: {
+					'dojox': '../dojox'
+				}
+			}, [
+				'dojo/parser',
+				'dojox/data/FileStore',
+				'dojox/grid/DataGrid',
+				'dojo/domReady!'
+			], function (parser) {
+				parser.parse();
+			});
+		</script>
+
+	</body>
+</html>
