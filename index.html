@@ -4,7 +4,10 @@
 		<title>Testing stuff</title>
 
 		<style type="text/css">
+			@import "../dojo/resources/dojo.css";
 			@import "../dijit/themes/claro/claro.css";
+			@import "../dojox/grid/resources/Grid.css";
+			@import "../dojox/grid/resources/claroGrid.css";
 
 			html, body {
 				box-sizing: border-box;
@@ -18,11 +21,8 @@
 	</head>
 	<body class="claro">
 
-		<span data-dojo-type="dojox.data.FileStore"
-			data-dojo-id="myStore" data-dojo-props="url:'./data.json'"></span>
 
 		<table data-dojo-type="dojox.grid.DataGrid"
-			data-dojo-props="store:myStore"
 			style="height: 400px; width: 600px;">
 			<thead>
 				<tr>
@@ -46,8 +46,19 @@
 				'dojox/data/FileStore',
 				'dojox/grid/DataGrid',
 				'dojo/domReady!'
-			], function (parser) {
-				parser.parse();
+			], function (parser, FileStore) {
+				parser.parse().then(function (nodes) {
+					console.log('success', arguments);
+
+					var myStore = new FileStore({
+						url: './data.json'
+					});
+					var grid = nodes[0];
+
+					grid.setStore(myStore);
+				}, function (err) {
+					console.log(err);
+				});
 			});
 		</script>
 
