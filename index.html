@@ -17,39 +17,44 @@
 		</style>
 	</head>
 	<body class="claro">
-
-		<span data-dojo-type="dojox.data.FileStore"
-			data-dojo-id="myStore" data-dojo-props="url:'./data.json'"></span>
-
-		<table data-dojo-type="dojox.grid.DataGrid"
-			data-dojo-props="store:myStore"
-			style="height: 400px; width: 600px;">
-			<thead>
-				<tr>
-					<th field="id" width="200px">ID</th>
-					<th field="firstField" width="200px">Field 1</th>
-					<th field="secondField" width="200px">Field 2</th>
-				</tr>
-			</thead>
-		</table>
-
+		<div data-dojo-type="dijit/layout/BorderContainer" class="dijitContainer dijitLayoutContainer
+			dijitBorderContainer" id="container" style="height: 100%; width: 100%;">
+			<div data-dojo-type="dijit/layout/ContentPane" region="center" class="dijitContentPane">
+				<div id="editor">
+				</div>
+			</div>
+		</div>
 		<script data-dojo-config="async:true" src="../dojo/dojo.js"></script>
 		<script type="text/javascript">
 			require({
 				async: true,
 				isDebug: true,
 				paths: {
-					'dojox': '../dojox'
+					'dijit': '../dijit'
 				}
 			}, [
 				'dojo/parser',
-				'dojox/data/FileStore',
-				'dojox/grid/DataGrid',
+				'dojo/sniff',
+				'dijit/Editor',
+				'dijit/layout/BorderContainer',
+				'dijit/layout/ContentPane',
 				'dojo/domReady!'
-			], function (parser) {
-				parser.parse();
+			], function (parser, has, Editor) {
+				var editor = new Editor({
+					plugins: [
+						'undo',
+						'redo',
+						'bold',
+						'italic',
+						'underline',
+						{ name: 'dijit._editor.plugins.EnterKeyHandling', blockNodeForEnter: 'p' }
+					]
+				}, 'editor');
+
+				editor.startup();
+
+				console.log(has('trident') && 'IE11');
 			});
 		</script>
-
 	</body>
 </html>
